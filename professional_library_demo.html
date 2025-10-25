@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Catalog System - Professional Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Professional Design System */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --border: #e2e8f0;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            box-shadow: var(--shadow-lg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white !important;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 0.75rem 1rem !important;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white !important;
+        }
+
+        /* Tab Navigation */
+        .tab-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .tab-nav {
+            display: flex;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab-nav .nav-link {
+            flex: 1;
+            text-align: center;
+            padding: 1rem 1.5rem;
+            color: var(--secondary);
+            background: transparent;
+            border: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-radius: 0;
+        }
+
+        .tab-nav .nav-link.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-nav .nav-link:hover:not(.active) {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+
+        .tab-content {
+            padding: 2rem;
+        }
+
+        /* Cards */
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            color: var(--dark);
+            padding: 1rem 1.5rem;
+        }
+
+        /* Stats Cards */
+        .stats-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            text-align: center;
+        }
+
+        .stats-card:hover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e40af 100%);
+        }
+
+        .stats-card .card-body {
+            padding: 2rem 1rem;
+        }
+
+        .stats-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .stats-card h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Book Cards */
+        .book-card {
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .book-card:hover {
+            border-left-color: var(--success);
+            transform: translateY(-3px);
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* Search Bar */
+        .search-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .search-input {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: none;
+            padding: 0.5rem 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Badges */
+        .badge {
+            border-radius: 6px;
+            font-weight: 500;
+            padding: 0.375rem 0.75rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--dark) 0%, #0f172a 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Demo Notice */
+        .demo-notice {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid var(--warning);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        /* Hash Table Visual */
+        .hash-table-visual {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .chain-item {
+            background: #e0f2fe;
+            border: 1px solid #b3e5fc;
+            border-radius: 6px;
+            padding: 0.5rem;
+            margin: 0.25rem 0;
+            transition: all 0.2s ease;
+        }
+
+        .chain-item:hover {
+            background: #b3e5fc;
+            transform: translateX(4px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tab-nav {
+                flex-direction: column;
+            }
+            
+            .tab-nav .nav-link {
+                border-bottom: 1px solid var(--border);
+            }
+            
+            .stats-card h3 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Modal Enhancements */
+        .modal-content {
+            border-radius: 12px;
+            border: none;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-bottom: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-book"></i> Library Catalog System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home" onclick="showTab('home')">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#books" onclick="showTab('books')">
+                            <i class="fas fa-books"></i> Books
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#search" onclick="showTab('search')">
+                            <i class="fas fa-search"></i> Search
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#statistics" onclick="showTab('statistics')">
+                            <i class="fas fa-chart-bar"></i> Statistics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#borrowers" onclick="showTab('borrowers')">
+                            <i class="fas fa-users"></i> Borrowers
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Home Tab -->
+        <div id="home-tab" class="tab-content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="demo-notice">
+                        <h2><i class="fas fa-info-circle"></i> Professional Library Catalog System</h2>
+                        <p class="mb-0">
+                            Advanced book management system with separate chaining hash table implementation.
+                            Clean, professional interface with full functionality.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="card stats-card">
+                        <div class="card-body">
+                            <i class="fas fa-books"></i>
+                            <h3>15</h3>
+                            <p class="mb-0">Total Books</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card stats-card">
+                        <div class="card-body">
+                            <i class="fas fa-copy"></i>
+                            <h3>42</h3>
+                            <p class="mb-0">Total Copies</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card stats-card">
+                        <div class="card-body">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>28</h3>
+                            <p class="mb-0">Available</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card stats-card">
+                        <div class="card-body">
+                            <i class="fas fa-user-clock"></i>
+                            <h3>14</h3>
+                            <p class="mb-0">Borrowed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Features -->
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-sitemap"></i> Hash Table Features</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success"></i> Separate Chaining Collision Resolution</li>
+                                <li><i class="fas fa-check text-success"></i> SHA-256 Hash Function</li>
+                                <li><i class="fas fa-check text-success"></i> Dynamic Resizing (75% threshold)</li>
+                                <li><i class="fas fa-check text-success"></i> O(1) Average Case Performance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-book"></i> Library Features</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success"></i> Multi-criteria Book Search</li>
+                                <li><i class="fas fa-check text-success"></i> Real-time Availability Tracking</li>
+                                <li><i class="fas fa-check text-success"></i> Queue-based Reservation System</li>
+                                <li><i class="fas fa-check text-success"></i> Overdue Book Monitoring</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Books Tab -->
+        <div id="books-tab" class="tab-content" style="display: none;">
+            <div class="row">
+                <div class="col-12">
+                    <h2><i class="fas fa-books"></i> Library Catalog</h2>
+                    <p class="text-muted">Browse all books in the library collection</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card book-card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Clean Code</h5>
+                            <p class="card-text">
+                                <strong>Author:</strong> Robert C. Martin<br>
+                                <strong>Genre:</strong> Programming<br>
+                                <strong>Year:</strong> 2008<br>
+                                <strong>ISBN:</strong> <code>978-0-13-468599-1</code>
+                            </p>
+                            <div class="mb-3">
+                                <span class="badge bg-success">
+                                    <i class="fas fa-check-circle"></i> Available
+                                </span>
+                                <span class="badge bg-info">3/3 copies</span>
+                            </div>
+                            <div class="book-actions">
+                                <button class="btn btn-success btn-sm" onclick="borrowBook('978-0-13-468599-1', 'Clean Code')">
+                                    <i class="fas fa-book-reader"></i> Borrow
+                                </button>
+                                <button class="btn btn-warning btn-sm" onclick="reserveBook('978-0-13-468599-1', 'Clean Code')">
+                                    <i class="fas fa-bookmark"></i> Reserve
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card book-card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Effective Java</h5>
+                            <p class="card-text">
+                                <strong>Author:</strong> Joshua Bloch<br>
+                                <strong>Genre:</strong> Programming<br>
+                                <strong>Year:</strong> 2017<br>
+                                <strong>ISBN:</strong> <code>978-0-321-35668-0</code>
+                            </p>
+                            <div class="mb-3">
+                                <span class="badge bg-success">
+                                    <i class="fas fa-check-circle"></i> Available
+                                </span>
+                                <span class="badge bg-info">2/4 copies</span>
+                            </div>
+                            <div class="book-actions">
+                                <button class="btn btn-success btn-sm" onclick="borrowBook('978-0-321-35668-0', 'Effective Java')">
+                                    <i class="fas fa-book-reader"></i> Borrow
+                                </button>
+                                <button class="btn btn-warning btn-sm" onclick="reserveBook('978-0-321-35668-0', 'Effective Java')">
+                                    <i class="fas fa-bookmark"></i> Reserve
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card book-card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">1984</h5>
+                            <p class="card-text">
+                                <strong>Author:</strong> George Orwell<br>
+                                <strong>Genre:</strong> Fiction<br>
+                                <strong>Year:</strong> 1949<br>
+                                <strong>ISBN:</strong> <code>978-0-321-35668-3</code>
+                            </p>
+                            <div class="mb-3">
+                                <span class="badge bg-danger">
+                                    <i class="fas fa-times-circle"></i> Unavailable
+                                </span>
+                                <span class="badge bg-info">0/4 copies</span>
+                                <span class="badge bg-warning">2 reservations</span>
+                            </div>
+                            <div class="book-actions">
+                                <button class="btn btn-warning btn-sm" onclick="reserveBook('978-0-321-35668-3', '1984')">
+                                    <i class="fas fa-bookmark"></i> Reserve
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Tab -->
+        <div id="search-tab" class="tab-content" style="display: none;">
+            <div class="row">
+                <div class="col-12">
+                    <h2><i class="fas fa-search"></i> Search Library</h2>
+                    <p class="text-muted">Find books by title, author, genre, or ISBN</p>
+                </div>
+            </div>
+
+            <div class="search-container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input type="text" class="form-control search-input" 
+                                   placeholder="Search by title, author, genre, or ISBN..." 
+                                   id="searchInput">
+                            <button class="btn btn-primary" type="button" onclick="performSearch()">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-select search-input" id="searchType">
+                            <option value="all">All Fields</option>
+                            <option value="title">Title Only</option>
+                            <option value="author">Author Only</option>
+                            <option value="genre">Genre Only</option>
+                            <option value="isbn">ISBN Only</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button class="btn btn-outline-primary btn-sm" onclick="quickSearch('Clean Code')">
+                            <i class="fas fa-book"></i> Clean Code
+                        </button>
+                        <button class="btn btn-outline-primary btn-sm" onclick="quickSearch('Robert C. Martin')">
+                            <i class="fas fa-user"></i> Robert C. Martin
+                        </button>
+                        <button class="btn btn-outline-primary btn-sm" onclick="quickSearch('Programming')">
+                            <i class="fas fa-code"></i> Programming
+                        </button>
+                        <button class="btn btn-outline-primary btn-sm" onclick="quickSearch('978-0-13-468599-1')">
+                            <i class="fas fa-barcode"></i> ISBN Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Tab -->
+        <div id="statistics-tab" class="tab-content" style="display: none;">
+            <div class="row">
+                <div class="col-12">
+                    <h2><i class="fas fa-chart-bar"></i> System Statistics</h2>
+                    <p class="text-muted">Hash table performance and library analytics</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-chart-line"></i> Hash Table Performance</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Load Factor: 0.65</label>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 65%">
+                                        65%
+                                    </div>
+                                </div>
+                                <small class="text-muted">Optimal range: 0.5 - 0.75</small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Collision Rate: 0.15</label>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 15%">
+                                        15%
+                                    </div>
+                                </div>
+                                <small class="text-muted">Lower is better</small>
+                            </div>
+                            
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <h6 class="text-primary">50</h6>
+                                    <small class="text-muted">Table Capacity</small>
+                                </div>
+                                <div class="col-4">
+                                    <h6 class="text-warning">3</h6>
+                                    <small class="text-muted">Max Chain Length</small>
+                                </div>
+                                <div class="col-4">
+                                    <h6 class="text-info">1.2</h6>
+                                    <small class="text-muted">Avg Chain Length</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-chart-pie"></i> Library Activity</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <h6 class="text-success">28</h6>
+                                    <small class="text-muted">Available Copies</small>
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="text-warning">14</h6>
+                                    <small class="text-muted">Borrowed Copies</small>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <h6 class="text-info">5</h6>
+                                    <small class="text-muted">Active Reservations</small>
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="text-danger">2</h6>
+                                    <small class="text-muted">Overdue Books</small>
+                                </div>
+                            </div>
+                            
+                            <hr>
+                            
+                            <div class="text-center">
+                                <h6>Availability Rate</h6>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 67%">
+                                        67%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Borrowers Tab -->
+        <div id="borrowers-tab" class="tab-content" style="display: none;">
+            <div class="row">
+                <div class="col-12">
+                    <h2><i class="fas fa-users"></i> Active Borrowers</h2>
+                    <p class="text-muted">Track who has borrowed books and their return deadlines</p>
+                </div>
+            </div>
+
+            <!-- Borrower Statistics -->
+            <div class="row mb-4">
+                <div class="col-md-3 mb-3">
+                    <div class="card stats-card">
+                        <div class="card-body">
+                            <i class="fas fa-book-reader"></i>
+                            <h3>8</h3>
+                            <p class="mb-0">Active Borrowers</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card stats-card">
+                        <div class="card-body">
+                            <i class="fas fa-clock"></i>
+                            <h3>5</h3>
+                            <p class="mb-0">Due Soon</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card stats-card">
+                        <div class="card-body">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h3>2</h3>
+                            <p class="mb-0">Overdue</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card stats-card">
+                        <div class="card-body">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>1</h3>
+                            <p class="mb-0">Returned Today</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Borrowers List -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-list"></i> Borrower Records</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Borrower ID</th>
+                                            <th>Book Title</th>
+                                            <th>Author</th>
+                                            <th>Borrowed Date</th>
+                                            <th>Due Date</th>
+                                            <th>Days Remaining</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>user001</strong></td>
+                                            <td>Clean Code</td>
+                                            <td>Robert C. Martin</td>
+                                            <td>2024-01-15</td>
+                                            <td>2024-01-29</td>
+                                            <td><span class="badge bg-success">5 days</span></td>
+                                            <td><span class="badge bg-success">On Time</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" onclick="viewBorrowerDetails('user001', 'Clean Code')">
+                                                    <i class="fas fa-eye"></i> View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>user002</strong></td>
+                                            <td>Effective Java</td>
+                                            <td>Joshua Bloch</td>
+                                            <td>2024-01-10</td>
+                                            <td>2024-01-24</td>
+                                            <td><span class="badge bg-warning">0 days</span></td>
+                                            <td><span class="badge bg-warning">Due Today</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" onclick="viewBorrowerDetails('user002', 'Effective Java')">
+                                                    <i class="fas fa-eye"></i> View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>user003</strong></td>
+                                            <td>Design Patterns</td>
+                                            <td>Gang of Four</td>
+                                            <td>2024-01-05</td>
+                                            <td>2024-01-19</td>
+                                            <td><span class="badge bg-danger">-5 days</span></td>
+                                            <td><span class="badge bg-danger">Overdue</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" onclick="viewBorrowerDetails('user003', 'Design Patterns')">
+                                                    <i class="fas fa-eye"></i> View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>user004</strong></td>
+                                            <td>Clean Architecture</td>
+                                            <td>Robert C. Martin</td>
+                                            <td>2024-01-12</td>
+                                            <td>2024-01-26</td>
+                                            <td><span class="badge bg-success">2 days</span></td>
+                                            <td><span class="badge bg-success">On Time</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" onclick="viewBorrowerDetails('user004', 'Clean Architecture')">
+                                                    <i class="fas fa-eye"></i> View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>user005</strong></td>
+                                            <td>1984</td>
+                                            <td>George Orwell</td>
+                                            <td>2024-01-08</td>
+                                            <td>2024-01-22</td>
+                                            <td><span class="badge bg-danger">-2 days</span></td>
+                                            <td><span class="badge bg-danger">Overdue</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" onclick="viewBorrowerDetails('user005', '1984')">
+                                                    <i class="fas fa-eye"></i> View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>user006</strong></td>
+                                            <td>To Kill a Mockingbird</td>
+                                            <td>Harper Lee</td>
+                                            <td>2024-01-18</td>
+                                            <td>2024-02-01</td>
+                                            <td><span class="badge bg-success">8 days</span></td>
+                                            <td><span class="badge bg-success">On Time</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" onclick="viewBorrowerDetails('user006', 'To Kill a Mockingbird')">
+                                                    <i class="fas fa-eye"></i> View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>user007</strong></td>
+                                            <td>The Great Gatsby</td>
+                                            <td>F. Scott Fitzgerald</td>
+                                            <td>2024-01-14</td>
+                                            <td>2024-01-28</td>
+                                            <td><span class="badge bg-success">4 days</span></td>
+                                            <td><span class="badge bg-success">On Time</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" onclick="viewBorrowerDetails('user007', 'The Great Gatsby')">
+                                                    <i class="fas fa-eye"></i> View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>user008</strong></td>
+                                            <td>Dune</td>
+                                            <td>Frank Herbert</td>
+                                            <td>2024-01-16</td>
+                                            <td>2024-01-30</td>
+                                            <td><span class="badge bg-success">6 days</span></td>
+                                            <td><span class="badge bg-success">On Time</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" onclick="viewBorrowerDetails('user008', 'Dune')">
+                                                    <i class="fas fa-eye"></i> View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overdue Books Alert -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card border-danger">
+                        <div class="card-header bg-danger text-white">
+                            <h5><i class="fas fa-exclamation-triangle"></i> Overdue Books - Action Required</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="alert alert-danger">
+                                        <strong>user003</strong> - Design Patterns<br>
+                                        <small>Overdue by 5 days - Fine: ₹100</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="alert alert-danger">
+                                        <strong>user005</strong> - 1984<br>
+                                        <small>Overdue by 2 days - Fine: ₹100</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-danger" onclick="sendOverdueReminders()">
+                                    <i class="fas fa-envelope"></i> Send Reminders
+                                </button>
+                                <button class="btn btn-warning" onclick="generateOverdueReport()">
+                                    <i class="fas fa-file-pdf"></i> Generate Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-book"></i> Library Catalog System</h5>
+                    <p>Advanced book management with separate chaining hash table implementation.</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p><strong>Features:</strong></p>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-success"></i> Separate Chaining Hash Table</li>
+                        <li><i class="fas fa-check text-success"></i> ISBN Collision Handling</li>
+                        <li><i class="fas fa-check text-success"></i> Book Search & Management</li>
+                        <li><i class="fas fa-check text-success"></i> Reservation System</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Tab Navigation
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.style.display = 'none');
+            
+            // Show selected tab
+            document.getElementById(tabName + '-tab').style.display = 'block';
+            
+            // Update navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Search functionality
+        function performSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchType = document.getElementById('searchType');
+            const query = searchInput.value.trim();
+            
+            if (!query) {
+                alert('Please enter a search term!');
+                return;
+            }
+            
+            const results = simulateSearch(query, searchType.value);
+            displaySearchResults(results, query, searchType.value);
+        }
+        
+        function quickSearch(term) {
+            document.getElementById('searchInput').value = term;
+            performSearch();
+        }
+        
+        function simulateSearch(query, searchType) {
+            const books = [
+                {
+                    title: "Clean Code",
+                    author: "Robert C. Martin",
+                    genre: "Programming",
+                    year: 2008,
+                    isbn: "978-0-13-468599-1",
+                    available: true,
+                    copies: "3/3"
+                },
+                {
+                    title: "Clean Architecture",
+                    author: "Robert C. Martin",
+                    genre: "Programming",
+                    year: 2017,
+                    isbn: "978-0-13-235088-4",
+                    available: true,
+                    copies: "2/2"
+                },
+                {
+                    title: "Effective Java",
+                    author: "Joshua Bloch",
+                    genre: "Programming",
+                    year: 2017,
+                    isbn: "978-0-321-35668-0",
+                    available: true,
+                    copies: "2/4"
+                },
+                {
+                    title: "Design Patterns",
+                    author: "Gang of Four",
+                    genre: "Programming",
+                    year: 1994,
+                    isbn: "978-0-13-468599-2",
+                    available: false,
+                    copies: "0/2"
+                },
+                {
+                    title: "1984",
+                    author: "George Orwell",
+                    genre: "Fiction",
+                    year: 1949,
+                    isbn: "978-0-321-35668-3",
+                    available: false,
+                    copies: "0/4"
+                },
+                {
+                    title: "To Kill a Mockingbird",
+                    author: "Harper Lee",
+                    genre: "Fiction",
+                    year: 1960,
+                    isbn: "978-0-13-235088-7",
+                    available: true,
+                    copies: "3/3"
+                }
+            ];
+            
+            const queryLower = query.toLowerCase();
+            return books.filter(book => {
+                if (searchType === 'title') {
+                    return book.title.toLowerCase().includes(queryLower);
+                } else if (searchType === 'author') {
+                    return book.author.toLowerCase().includes(queryLower);
+                } else if (searchType === 'genre') {
+                    return book.genre.toLowerCase().includes(queryLower);
+                } else if (searchType === 'isbn') {
+                    return book.isbn.toLowerCase().includes(queryLower);
+                } else {
+                    return book.title.toLowerCase().includes(queryLower) ||
+                           book.author.toLowerCase().includes(queryLower) ||
+                           book.genre.toLowerCase().includes(queryLower) ||
+                           book.isbn.toLowerCase().includes(queryLower);
+                }
+            });
+        }
+        
+        function displaySearchResults(results, query, searchType) {
+            const modalHtml = `
+                <div class="modal fade" id="searchResultsModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                    <i class="fas fa-search"></i> Search Results
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-info">
+                                    <strong>Search Query:</strong> "${query}" 
+                                    <span class="badge bg-primary ms-2">${searchType.charAt(0).toUpperCase() + searchType.slice(1)} Search</span>
+                                    <span class="badge bg-success ms-2">${results.length} Result(s)</span>
+                                </div>
+                                
+                                ${results.length > 0 ? `
+                                    <div class="row">
+                                        ${results.map(book => `
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card book-card">
+                                                    <div class="card-body">
+                                                        <h6 class="card-title">${book.title}</h6>
+                                                        <p class="card-text small">
+                                                            <strong>Author:</strong> ${book.author}<br>
+                                                            <strong>Genre:</strong> ${book.genre}<br>
+                                                            <strong>Year:</strong> ${book.year}<br>
+                                                            <strong>ISBN:</strong> <code>${book.isbn}</code>
+                                                        </p>
+                                                        <div class="mb-2">
+                                                            <span class="badge ${book.available ? 'bg-success' : 'bg-danger'}">
+                                                                <i class="fas fa-${book.available ? 'check-circle' : 'times-circle'}"></i> 
+                                                                ${book.available ? 'Available' : 'Unavailable'}
+                                                            </span>
+                                                            <span class="badge bg-info">${book.copies} copies</span>
+                                                        </div>
+                                                        <div class="d-flex gap-1">
+                                                            ${book.available ? '<button class="btn btn-sm btn-success"><i class="fas fa-book-reader"></i> Borrow</button>' : ''}
+                                                            <button class="btn btn-sm btn-warning"><i class="fas fa-bookmark"></i> Reserve</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                ` : `
+                                    <div class="alert alert-warning text-center">
+                                        <i class="fas fa-search fa-2x mb-3"></i>
+                                        <h5>No Results Found</h5>
+                                        <p>No books match your search criteria.</p>
+                                    </div>
+                                `}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const existingModal = document.getElementById('searchResultsModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            const modal = new bootstrap.Modal(document.getElementById('searchResultsModal'));
+            modal.show();
+        }
+
+        // Book operations
+        function borrowBook(isbn, title) {
+            const user_id = prompt('Enter your user ID:', 'user' + Math.floor(Math.random() * 1000));
+            if (!user_id) return;
+            
+            // Simulate borrow with due date
+            const borrowDate = new Date();
+            const dueDate = new Date(borrowDate.getTime() + (14 * 24 * 60 * 60 * 1000)); // 14 days
+            
+            alert(`Successfully borrowed "${title}"!\n\nBorrow Date: ${borrowDate.toLocaleDateString()}\nDue Date: ${dueDate.toLocaleDateString()}\n\nPlease return by due date to avoid fines.`);
+        }
+
+        function reserveBook(isbn, title) {
+            const user_id = prompt('Enter your user ID:', 'user' + Math.floor(Math.random() * 1000));
+            if (!user_id) return;
+            
+            alert(`Successfully reserved "${title}"!\n\nYou will be notified when the book becomes available.`);
+        }
+
+        // Borrowers tab functions
+        function viewBorrowerDetails(userId, bookTitle) {
+            const modalHtml = `
+                <div class="modal fade" id="borrowerDetailsModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                    <i class="fas fa-user"></i> Borrower Details - ${userId}
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Borrower Information</h6>
+                                        <p><strong>User ID:</strong> ${userId}</p>
+                                        <p><strong>Book:</strong> ${bookTitle}</p>
+                                        <p><strong>Borrowed Date:</strong> 2024-01-15</p>
+                                        <p><strong>Due Date:</strong> 2024-01-29</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Status & Actions</h6>
+                                        <div class="mb-3">
+                                            <span class="badge bg-success">On Time</span>
+                                            <span class="badge bg-info">5 days remaining</span>
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <button class="btn btn-sm btn-primary" onclick="sendReminder('${userId}')">
+                                                <i class="fas fa-envelope"></i> Send Reminder
+                                            </button>
+                                            <button class="btn btn-sm btn-success" onclick="markReturned('${userId}', '${bookTitle}')">
+                                                <i class="fas fa-check"></i> Mark Returned
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const existingModal = document.getElementById('borrowerDetailsModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            const modal = new bootstrap.Modal(document.getElementById('borrowerDetailsModal'));
+            modal.show();
+        }
+
+        function sendReminder(userId) {
+            alert(`Reminder sent to ${userId}!\n\nEmail notification has been sent to the borrower.`);
+        }
+
+        function markReturned(userId, bookTitle) {
+            if (confirm(`Mark book "${bookTitle}" as returned by ${userId}?`)) {
+                // Remove the row from the table
+                const table = document.querySelector('#borrowers-tab .table tbody');
+                const rows = table.querySelectorAll('tr');
+                
+                for (let row of rows) {
+                    const borrowerId = row.querySelector('td:first-child strong').textContent;
+                    const bookTitleCell = row.querySelector('td:nth-child(2)').textContent;
+                    
+                    if (borrowerId === userId && bookTitleCell === bookTitle) {
+                        row.remove();
+                        break;
+                    }
+                }
+                
+                // Update statistics
+                updateBorrowerStats();
+                
+                // Close the modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('borrowerDetailsModal'));
+                if (modal) {
+                    modal.hide();
+                }
+                
+                alert(`Book "${bookTitle}" marked as returned by ${userId}.\n\nBook is now available for other borrowers.`);
+            }
+        }
+
+        function updateBorrowerStats() {
+            const table = document.querySelector('#borrowers-tab .table tbody');
+            const rows = table.querySelectorAll('tr');
+            
+            let activeBorrowers = rows.length;
+            let dueSoon = 0;
+            let overdue = 0;
+            
+            rows.forEach(row => {
+                const daysRemaining = row.querySelector('td:nth-child(6) .badge').textContent;
+                const status = row.querySelector('td:nth-child(7) .badge').textContent;
+                
+                if (status === 'Due Today') {
+                    dueSoon++;
+                } else if (status === 'Overdue') {
+                    overdue++;
+                }
+            });
+            
+            // Update the stats cards
+            document.querySelector('#borrowers-tab .stats-card:nth-child(1) h3').textContent = activeBorrowers;
+            document.querySelector('#borrowers-tab .stats-card:nth-child(2) h3').textContent = dueSoon;
+            document.querySelector('#borrowers-tab .stats-card:nth-child(3) h3').textContent = overdue;
+            
+            // Update overdue alerts section
+            updateOverdueAlerts();
+        }
+
+        function updateOverdueAlerts() {
+            const table = document.querySelector('#borrowers-tab .table tbody');
+            const rows = table.querySelectorAll('tr');
+            const overdueAlerts = document.querySelector('#borrowers-tab .card.border-danger .card-body .row');
+            
+            let overdueBooks = [];
+            rows.forEach(row => {
+                const status = row.querySelector('td:nth-child(7) .badge').textContent;
+                if (status === 'Overdue') {
+                    const userId = row.querySelector('td:first-child strong').textContent;
+                    const bookTitle = row.querySelector('td:nth-child(2)').textContent;
+                    const daysOverdue = row.querySelector('td:nth-child(6) .badge').textContent;
+                    overdueBooks.push({ userId, bookTitle, daysOverdue });
+                }
+            });
+            
+            if (overdueBooks.length === 0) {
+                // Hide overdue alerts section if no overdue books
+                document.querySelector('#borrowers-tab .card.border-danger').style.display = 'none';
+            } else {
+                // Show overdue alerts section and update content
+                document.querySelector('#borrowers-tab .card.border-danger').style.display = 'block';
+                
+                let alertsHtml = '';
+                overdueBooks.forEach(book => {
+                    alertsHtml += `
+                        <div class="col-md-6">
+                            <div class="alert alert-danger">
+                                <strong>${book.userId}</strong> - ${book.bookTitle}<br>
+                                <small>Overdue by ${book.daysOverdue} - Fine: ₹100</small>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                overdueAlerts.innerHTML = alertsHtml;
+            }
+        }
+
+        function sendOverdueReminders() {
+            alert('Overdue reminders sent to all borrowers!\n\n• user003 - Design Patterns (5 days overdue)\n• user005 - 1984 (2 days overdue)\n\nEmail notifications have been sent.');
+        }
+
+        function generateOverdueReport() {
+            alert('Overdue Report Generated!\n\nReport includes:\n• 2 overdue books\n• Total fines: ₹200\n• Borrower contact information\n• Return deadline details\n\nReport saved as PDF.');
+        }
+
+        // Enter key search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            showTab('home');
+        });
+    </script>
+</body>
+</html>
